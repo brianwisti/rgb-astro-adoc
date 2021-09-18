@@ -3,11 +3,12 @@ import Asciidoctor from '../components/Asciidoctor.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
 let title = 'Asciidoctor test';
+let content = `Yo world.
+
+How's it going?
+`;
+
 ---
 <BaseLayout title={title}>
-    <Asciidoctor>
-        Yo world.
-
-        How's it going?
-    </Asciidoctor>
+    <Asciidoctor content={content} />
 </BaseLayout>
