@@ -1,10 +1,13 @@
 ---
 import Asciidoctor from '../components/Asciidoctor.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
 
 let title = 'Asciidoctor test';
 ---
-<Asciidoctor>
-Yo world.
+<BaseLayout title={title}>
+    <Asciidoctor>
+        Yo world.
 
-How's it going?
-</Asciidoctor>
+        How's it going?
+    </Asciidoctor>
+</BaseLayout>
