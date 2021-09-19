@@ -1,7 +1,7 @@
 ---
 import Processor from 'asciidoctor';
 
-const { content } = Astro.props;
+let { content } = Astro.props;
 
 if (!content) {
     content = "****\nNeed some content!\n****\n";

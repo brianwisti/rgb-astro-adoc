@@ -2,6 +2,8 @@
 title: Testing Astro
 ---
 
+Public repo at https://github.com/brianwisti/rgb-astro-adoc
+
 == What is this?
 
 :adoc: https://asciidoctor.org
@@ -28,7 +30,7 @@ So far I've got:
 ---
 import Processor from 'asciidoctor';
 
-const { content } = Astro.props;
+let { content } = Astro.props;
 
 if (!content) {
     content = "****\nNeed some content!\n****\n";
