@@ -1,42 +1,35 @@
-# Welcome to [Astro](https://astro.build)
+# Random Geekery Blog Astro Adoc
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/snowpackjs/astro/tree/latest/examples/starter)
+My attempt to build a version of [my blog][rgb-site] and its [Asciidoctor][adoc] content with [Astro][astro].
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+[rgb-site]: https://randomgeekery.org
+[adoc]: http://asciidoctor.org
+[astro]: https://astro.build
 
-## 🚀 Project Structure
+Since I have no deep Node.js or JavaScript knowledge, it mostly involves me starting
+from the Astro generic starter and flailing a lot.
 
-Inside of your Astro project, you'll see the following folders and files:
+Things that seem to have settled down a bit already:
 
-```
-/
-├── public/
-│   ├── robots.txt
-│   └── favicon.ico
-├── src/
-│   ├── components/
-│   │   └── Tour.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+- Asciidoctor files go under `content/`
+- draft posts go under `content/draft/`
+- `<Asciidoctor content={content} />` stuffs Asciidoctor content into a layout
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+Everything not noted here is expected to fluctuate wildly as I figured out what the heck I'm doing.
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
+The rest of this document is a lightly edited version of the original Astro starter `README.md`.
 
 ## 🧞 Commands
 
 All commands are run from the root of the project, from a terminal:
 
 | Command         | Action                                      |
-|:----------------|:--------------------------------------------|
+| :-------------- | :------------------------------------------ |
 | `npm install`   | Installs dependencies                       |
 | `npm run dev`   | Starts local dev server at `localhost:3000` |
 | `npm run build` | Build your production site to `./dist/`     |
 
 ## 👀 Want to learn more?
 
-Feel free to check [our documentation](https://github.com/snowpackjs/astro) or jump into our [Discord server](https://astro.build/chat).
+- [Astro documentation](https://github.com/snowpackjs/astro)
+- [Asciidoctor documentation](https://docs.asciidoctor.org)
