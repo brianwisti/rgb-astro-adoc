@@ -1,4 +1,5 @@
 ---
+import * as process from 'node:process';
 import Processor from 'asciidoctor';
 
 let { content } = Astro.props;
@@ -7,7 +8,9 @@ if (!content) {
     content = "****\nNeed some content!\n****\n";
 }
 
-const htmlContent = Processor().convert(content);
+// try this on Linux before getting clever with path manipulation on Windows
+let cwd = process.cwd();
+const htmlContent = Processor().convert(content, { safe: 0, base_dir: cwd });
 ---
 <article>
     {htmlContent}

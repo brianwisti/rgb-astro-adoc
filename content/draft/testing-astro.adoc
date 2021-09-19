@@ -25,7 +25,9 @@ So far I've got:
 
 == Notes so far
 
-.The `Asciidoctor` component
+=== The `Asciidoctor` component
+
+.`src/components/Asciidoctor.astro`
 ----
 ---
 import Processor from 'asciidoctor';
@@ -43,12 +45,26 @@ const htmlContent = Processor().convert(content);
 </article>
 ----
 
+****
+Huh.
+Is this `include` not working because I'm getting it wrong?
+Or is it because I'm on Windows?
+****
+
+----
+include::src/components/Asciidoctor.astro[]
+----
+
+=== The `/draft` dynamic route
+
+Doesn't need to be recursive, so it's the easiest one to start with.
+
 .`src/pages/draft/[slug].astro`
 ----
 ---
-import fs from 'node:fs';
-import path from 'node:path';
-import process from 'node:process';
+import * as fs from 'node:fs';
+import * as path from 'node:path';
+import * as process from 'node:process';
 
 import matter from 'gray-matter';
 
@@ -89,20 +105,46 @@ const { title } = article.data;
 </ArticleLayout>
 ----
 
-=== `AdocDraftLayout`
+=== List Articles in a `SectionLayout`
 
-Nothing too complicated.
-Use `BaseLayout` with an Asciidoctor component for the slot.
+Stealing and generalizing from my draft dynamic route.
+Probably a good candidate for splitting into `packages/`.
 
-=== The dynamic routes file
+----
+---
+import * as fs from 'node:fs';
+import * as path from 'node:path';
+import * as process from 'node:process';
 
-== Prefer `asciidoctor-html5s`
+import matter from 'gray-matter';
 
-never mind.
-It doesn't play well with my tiny understanding of `import` semantics.
+import ArticleLayout from './ArticleLayout.astro';
+import ArticleList from '../components/ArticleList.astro';
 
-Oh well.
-Let's make some progress here before busting out pandoc and porting everything to yet another format.
+const { title, section } = Astro.props;
+const sectionDir = path.join(
+    process.cwd(), "content", section
+);
+
+const articles = fs.readdirSync(sectionDir)
+    .filter((file) => path.extname(file) === ".adoc")
+    .map((file) => {
+        const slug = path.basename(file, ".adoc");
+        const filePath = path.join(sectionDir, file);
+        const article = matter.read(filePath);
+
+        return {
+            link: `/${section}/${slug}`,
+            title: article.data.title,
+        };
+    })
+    .sort((entry) => entry.title);
+---
+<ArticleLayout title={title}>
+    <section><slot /></section>
+    <ArticleList articles={articles} />
+</ArticleLayout>
+----
 
 == A style component?
 

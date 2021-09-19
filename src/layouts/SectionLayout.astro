@@ -1,0 +1,33 @@
+---
+import * as fs from 'node:fs';
+import * as path from 'node:path';
+import * as process from 'node:process';
+
+import matter from 'gray-matter';
+
+import ArticleLayout from './ArticleLayout.astro';
+import ArticleList from '../components/ArticleList.astro';
+
+const { title, section } = Astro.props;
+const sectionDir = path.join(
+    process.cwd(), "content", section
+);
+
+const articles = fs.readdirSync(sectionDir)
+    .filter((file) => path.extname(file) === ".adoc")
+    .map((file) => {
+        const slug = path.basename(file, ".adoc");
+        const filePath = path.join(sectionDir, file);
+        const article = matter.read(filePath);
+
+        return {
+            link: `/${section}/${slug}`,
+            title: article.data.title,
+        };
+    })
+    .sort((entry) => entry.title);
+---
+<ArticleLayout title={title}>
+    <section><slot /></section>
+    <ArticleList articles={articles} />
+</ArticleLayout>

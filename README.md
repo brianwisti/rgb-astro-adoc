@@ -14,6 +14,7 @@ Things that seem to have settled down a bit already:
 - Asciidoctor files go under `content/`
 - draft posts go under `content/draft/`
 - `<Asciidoctor content={content} />` stuffs Asciidoctor content into a layout
+- the index file for each section has a `SectionLayout` listing articles
 
 Everything not noted here is expected to fluctuate wildly as I figured out what the heck I'm doing.
 

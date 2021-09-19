@@ -1,0 +1,8 @@
+---
+const { articles } = Astro.props;
+---
+<ul>
+    {articles.map((article) => (
+        <li><a href={article.link}>{article.title}</a></li>
+    ))}
+</ul>

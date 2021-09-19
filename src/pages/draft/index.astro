@@ -1,37 +1,10 @@
 ---
-import fs from "node:fs";
-import path from "node:path";
-import process from 'node:process';
+import SectionLayout from '../../layouts/SectionLayout.astro';
 
-import matter from 'gray-matter';
-
-import ArticleLayout from '../../layouts/ArticleLayout.astro';
-
-const draftDir = path.join(
-    process.cwd(), "content", "draft"
-);
-const articles = fs.readdirSync(draftDir)
-    .filter((file) => path.extname(file) === ".adoc")
-    .map((file) => {
-        const slug = path.basename(file, ".adoc");
-        const filePath = path.join(draftDir, file);
-        const article = matter.read(filePath);
-
-        return {
-            link: `/draft/${slug}`,
-            title: article.data.title,
-        };
-    })
-    .sort((entry) => entry.title);
 const title = "Drafts";
+const section = "draft";
 ---
-<ArticleLayout title={title}>
-    <p>Draft listing goes here.</p>
-    <ul>
-        {articles.map((article) => (
-            <li>
-                <a href={article.link}>{article.title}</a>
-            </li>
-        ))}
-    </ul>
-</ArticleLayout>
+<SectionLayout title={title} section={section}>
+    <p>Draft listing goes here. Once I have build environments sorted, these
+    will only be built in the dev environment.</p>
+</SectionLayout>
