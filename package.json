@@ -12,6 +12,8 @@
     "astro": "^0.20.7"
   },
   "dependencies": {
-    "asciidoctor": "^2.2.5"
+    "asciidoctor": "^2.2.5",
+    "glob": "^7.1.7",
+    "gray-matter": "^4.0.3"
   }
 }

@@ -1,0 +1,26 @@
+{
+  "workbench.colorCustomizations": {
+    "activityBar.activeBackground": "#65226e",
+    "activityBar.activeBorder": "#000000",
+    "activityBar.background": "#65226e",
+    "activityBar.foreground": "#e7e7e7",
+    "activityBar.inactiveForeground": "#e7e7e799",
+    "activityBarBadge.background": "#000000",
+    "activityBarBadge.foreground": "#e7e7e7",
+    "editorGroup.border": "#65226e",
+    "panel.border": "#65226e",
+    "sideBar.border": "#65226e",
+    "statusBar.background": "#411647",
+    "statusBar.border": "#411647",
+    "statusBar.foreground": "#e7e7e7",
+    "statusBarItem.hoverBackground": "#65226e",
+    "tab.activeBorder": "#65226e",
+    "titleBar.activeBackground": "#411647",
+    "titleBar.activeForeground": "#e7e7e7",
+    "titleBar.border": "#411647",
+    "titleBar.inactiveBackground": "#41164799",
+    "titleBar.inactiveForeground": "#e7e7e799"
+  },
+  "peacock.color": "#411647",
+  "cSpell.words": ["Asciidoctor", "Astro", "Entrypoint"]
+}

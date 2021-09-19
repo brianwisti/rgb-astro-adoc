@@ -1,0 +1,73 @@
+---
+title: Testing Astro
+---
+My _goodness_ that dog is barking a lot.
+
+== What is this?
+
+This isn't a real draft post, but might become one later.
+I've got basic support for an Asciidoctor component.
+Haven't figured out how to do anything clever like grabbing `slot`.
+
+== `Asciidoctor` Component
+
+.The raw component
+----
+---
+import Processor from 'asciidoctor';
+
+console.log('Loading Asciidoctor component');
+const processor = Processor();
+const slots = Astro.slots;
+console.log(slots);
+const { content } = Astro.props;
+let htmlContent = null;
+
+if (content) {
+    const adocContent = processor.convert(content);
+    htmlContent = adocContent;
+}
+---
+<article>
+    {htmlContent ? htmlContent : <slot />}
+</article>
+----
+
+NOTE: dynamic routes in a single folder
+
+Does update work better now?
+
+Yes.
+Yes it does.
+
+:fetch-content: https://docs.astro.build/reference/api-reference#astrofetchcontent
+
+Maybe I don't need to.
+Maybe --- just _maybe_ ---
+{fetch-content}[`Astro.fetchContent`] can do what I need.
+
+****
+Well, no. But `node.readdirSync` can!
+
+Except how to refresh?
+I wasn't thinking about the _static_ part of `getStaticPaths` maybe?
+****
+
+=== `AdocDraftLayout`
+
+Nothing too complicated.
+Use `BaseLayout` with an Asciidoctor component for the slot.
+
+=== The dynamic routes file
+
+== Prefer `asciidoctor-html5s`
+
+== A style component?
+
+== Syntax highlighting for source code
+
+== Routes for published content
+
+NOTE: recursive dynamic routes
+
+== Images

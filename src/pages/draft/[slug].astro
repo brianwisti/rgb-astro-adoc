@@ -1,0 +1,42 @@
+---
+import fs from 'node:fs';
+import path from 'node:path';
+import process from 'node:process';
+
+import matter from 'gray-matter';
+
+import Asciidoctor from '../../components/Asciidoctor.astro';
+import ArticleLayout from '../../layouts/ArticleLayout.astro';
+
+export async function getStaticPaths() {
+    const draftDir = path.join(
+        process.cwd(), "content", "draft"
+    );
+    const adocDrafts = fs.readdirSync(draftDir)
+        .filter((file) => path.extname(file) === ".adoc");
+
+    return adocDrafts.map((file) => {
+        const slug = path.basename(file, ".adoc");
+        const filePath = path.join(draftDir, file);
+
+        return {
+            params: {
+                slug: slug,
+            },
+            props: {
+                filePath: filePath,
+            },
+        };
+    });
+}
+
+const { slug } = Astro.request.params;
+const { filePath } = Astro.props;
+
+const article = matter.read(filePath);
+const content = article.content;
+const { title } = article.data;
+---
+<ArticleLayout title={title}>
+    <Asciidoctor content={content} />
+</ArticleLayout>
