@@ -1,57 +1,91 @@
 ---
 title: Testing Astro
 ---
-My _goodness_ that dog is barking a lot.
 
 == What is this?
 
+:adoc: https://asciidoctor.org
+:adoc-js: https://github.com/asciidoctor/asciidoctor.js
+
+It's {adoc}[Asciidoctor] in https://astro.build[Astro]!
+
+****
 This isn't a real draft post, but might become one later.
-I've got basic support for an Asciidoctor component.
-Haven't figured out how to do anything clever like grabbing `slot`.
+****
 
-== `Asciidoctor` Component
+So far I've got:
 
-.The raw component
+
+- an `Asciidoctor` component using {adoc-js}[Asciidoctor.js]
+- this file in `WORKSPACE/content/draft/testing-astro.adoc`
+- a dynamic route that builds pages from files in `WORKSPACE/content/draft/*.adoc`
+- the vanilla `asciidoctor.css` style rules, applied globally
+
+== Notes so far
+
+.The `Asciidoctor` component
 ----
 ---
 import Processor from 'asciidoctor';
 
-console.log('Loading Asciidoctor component');
-const processor = Processor();
-const slots = Astro.slots;
-console.log(slots);
 const { content } = Astro.props;
-let htmlContent = null;
 
-if (content) {
-    const adocContent = processor.convert(content);
-    htmlContent = adocContent;
+if (!content) {
+    content = "****\nNeed some content!\n****\n";
 }
+
+const htmlContent = Processor().convert(content);
 ---
 <article>
-    {htmlContent ? htmlContent : <slot />}
+    {htmlContent}
 </article>
 ----
 
-NOTE: dynamic routes in a single folder
+.`src/pages/draft/[slug].astro`
+----
+---
+import fs from 'node:fs';
+import path from 'node:path';
+import process from 'node:process';
 
-Does update work better now?
+import matter from 'gray-matter';
 
-Yes.
-Yes it does.
+import Asciidoctor from '../../components/Asciidoctor.astro';
+import ArticleLayout from '../../layouts/ArticleLayout.astro';
 
-:fetch-content: https://docs.astro.build/reference/api-reference#astrofetchcontent
+export async function getStaticPaths() {
+    const draftDir = path.join(
+        process.cwd(), "content", "draft"
+    );
+    const adocDrafts = fs.readdirSync(draftDir)
+        .filter((file) => path.extname(file) === ".adoc");
 
-Maybe I don't need to.
-Maybe --- just _maybe_ ---
-{fetch-content}[`Astro.fetchContent`] can do what I need.
+    return adocDrafts.map((file) => {
+        const slug = path.basename(file, ".adoc");
+        const filePath = path.join(draftDir, file);
 
-****
-Well, no. But `node.readdirSync` can!
+        return {
+            params: {
+                slug: slug,
+            },
+            props: {
+                filePath: filePath,
+            },
+        };
+    });
+}
 
-Except how to refresh?
-I wasn't thinking about the _static_ part of `getStaticPaths` maybe?
-****
+const { slug } = Astro.request.params;
+const { filePath } = Astro.props;
+
+const article = matter.read(filePath);
+const content = article.content;
+const { title } = article.data;
+---
+<ArticleLayout title={title}>
+    <Asciidoctor content={content} />
+</ArticleLayout>
+----
 
 === `AdocDraftLayout`
 
@@ -61,6 +95,12 @@ Use `BaseLayout` with an Asciidoctor component for the slot.
 === The dynamic routes file
 
 == Prefer `asciidoctor-html5s`
+
+never mind.
+It doesn't play well with my tiny understanding of `import` semantics.
+
+Oh well.
+Let's make some progress here before busting out pandoc and porting everything to yet another format.
 
 == A style component?
 

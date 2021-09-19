@@ -1,18 +1,14 @@
 ---
 import Processor from 'asciidoctor';
 
-console.log('Loading Asciidoctor component');
-const processor = Processor();
-const slots = Astro.slots;
-console.log(slots);
 const { content } = Astro.props;
-let htmlContent = null;
 
-if (content) {
-    const adocContent = processor.convert(content);
-    htmlContent = adocContent;
+if (!content) {
+    content = "****\nNeed some content!\n****\n";
 }
+
+const htmlContent = Processor().convert(content);
 ---
 <article>
-    {htmlContent ? htmlContent : <slot />}
+    {htmlContent}
 </article>
